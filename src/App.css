@@ -1,4 +1,25 @@
-.App {
+@import url('https://fonts.googleapis.com/css?family=Maven+Pro|Satisfy|Sulphur+Point&display=swap');
+
+body {
+  font-family: 'Sulphur Point', sans-serif;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  font-size: 18px;
+  padding: 0 .5rem;
+}
+
+h1 {
+  font-family: 'Satisfy', cursive;
+  color: rgba(243, 79, 96, 0.89)
+}
+
+
+
+
+
+
+
+
+/* .App {
   text-align: center;
 }
 
@@ -22,7 +43,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 .App-link {
   color: #61dafb;
