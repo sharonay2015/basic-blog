@@ -58,12 +58,12 @@ nav a:hover {
 .article-list-item {
   text-decoration: none;
   color: black;
-  padding: 16px 0 0 0;
+  padding: 10px 0 0 0;
 }
 
 .article-list-item p {
-  padding-bottom: 32px;
-  border-bottom: 2px solid black;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--main-color);
 }
 
 #add-comment-form {
