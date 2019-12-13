@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import ArticleList from './pages/ArticleList';
+import ArticleListPage from './pages/ArticleListPage';
 import ArticlePage from './pages/ArticlePage';
 import Navbar from './Navbar';
 import './App.css';
@@ -19,7 +19,7 @@ class App extends Component {
           <div id="page-body">
             <Route path="/" component={HomePage} exact />
             <Route path="/about" component={AboutPage} />
-            <Route path="/article-list" component={ArticleList} />
+            <Route path="/article-list" component={ArticleListPage} />
             <Route path="/article/:name" component={ArticlePage} />
           </div>
         </div>
