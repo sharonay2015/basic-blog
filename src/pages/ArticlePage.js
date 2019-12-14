@@ -1,5 +1,6 @@
 import React from 'react';
 import ArticleList from '../components/ArticleList';
+import NotFoundPage from './NotFoundPage';
 import articleContent from './article-content';
 
 const ArticlePage = ({ match }) => {
@@ -7,7 +8,7 @@ const ArticlePage = ({ match }) => {
   // find article from articles array that has the name that matches the name in the url
   const article = articleContent.find(article => article.name === name);
 
-  if (!article) return <h1>Article does not exist</h1>
+  if (!article) return <NotFoundPage />
 
   // include all the articles in the list except the one currently selected 
   const otherArticles = articleContent.filter(article => article.name !== name);
