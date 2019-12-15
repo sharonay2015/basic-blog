@@ -100,6 +100,11 @@ nav a:hover {
   padding: 16px;
 }
 
+#pic {
+  height: 60vh;
+  width: 100vw;
+}
+
 
 /* .App {
   text-align: center;

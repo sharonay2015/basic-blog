@@ -1,9 +1,14 @@
 import React from 'react';
+import Logo from '../phenix.jpg';
 
 const AboutPage = () => (
   <>
 
     <h1>About Me</h1>
+
+    <div>
+      <img src={Logo} alt="pic" id="pic"></img>
+    </div>
 
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis egestas semper. Aliquam lorem ex, consectetur eu diam et, lacinia finibus dui. Nulla iaculis justo ut mauris gravida sodales. Mauris pulvinar, nibh vitae feugiat gravida, orci lectus malesuada neque, eget pretium urna nisi non eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec id nibh tellus. Vestibulum eu volutpat dolor. Proin faucibus turpis ac varius molestie. Ut maximus ut orci a egestas.
