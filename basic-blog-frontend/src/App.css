@@ -18,7 +18,7 @@ h1 {
 /* align content so that it does not span width of the page */
 #page-body {
   max-width: 700px;
-  margin: auto;
+  margin: auto 10px;
   padding-top: 64px;
 }
 
@@ -35,6 +35,15 @@ nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.navbar {
+  display: flex;
+}
+
+.home {
+  margin-right: auto;
+  margin-left: auto;
 }
 
 nav li {
@@ -101,12 +110,12 @@ nav a:hover {
 }
 
 #pic {
-  height: 60vh;
-  width: 100vw;
+  height: 70vh;
+  width: 90vw;  
 }
 
 
-/* .App {
+.App {
   text-align: center;
 }
 
@@ -130,7 +139,7 @@ nav a:hover {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-} */
+}
 
 .App-link {
   color: #61dafb;
