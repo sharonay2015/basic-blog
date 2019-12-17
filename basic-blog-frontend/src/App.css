@@ -18,7 +18,7 @@ h1 {
 /* align content so that it does not span width of the page */
 #page-body {
   max-width: 700px;
-  margin: auto 10px;
+  margin: auto;
   padding-top: 64px;
 }
 
