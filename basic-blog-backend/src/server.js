@@ -14,7 +14,7 @@ app.get('/api/articles/:name', async (req, res) => {
     const articleName = req.params.name;
 
     // connect to local database, return promise
-    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true })
+    const client = await MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true }, { useNewUrlParser: true })
     // specify database to query 
     const db = client.db('basic-blog');
 
@@ -31,11 +31,38 @@ app.get('/api/articles/:name', async (req, res) => {
 })
 
 // define endpoints for app
-app.post('/api/articles/:name/upvote', (req, res) => {
-  const articleName = req.params.name;
+// UPVOTES
+app.post('/api/articles/:name/upvote', async (req, res) => {
+  try {
+    // extract article name from url parameter
+    const articleName = req.params.name;
 
-  articlesInfo[articleName].upvotes += 1;
-  res.status(200).send(`${articleName} now has ${articlesInfo[articleName].upvotes} upvotes!!!`)
+    // connect to local database, return promise
+    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true })
+    // specify database to query 
+    const db = client.db('basic-blog');
+
+    // findone query to find matching article
+    const articleInfo = await db.collection('articles').findOne({ name: articleName });
+
+    // update query to increase # of upvotes
+    await db.collection('articles').updateOne({ name: articleName }, {
+      '$set': {
+        upvotes: articleInfo.upvotes + 1,
+      },
+    });
+    // get the updated version of article 
+    const updatedArticleInfo = await db.collection('articles').findOne({ name: articleName });
+
+    // send updated article info as a response to client for up-to-date info
+    res.status(200).json(updatedArticleInfo);
+
+    // close db connection
+    client.close();
+  } catch (error) {
+    res.status(500).json({ message: 'Error connecting to db', error });
+  }
+
 });
 
 app.post('/api/articles/:name/add-comment', (req, res) => {
