@@ -8,39 +8,43 @@ const app = express();
 // parse json object, adds body property to request parameter t
 app.use(bodyParser.json());
 
-// callback
-app.get('/api/articles/:name', async (req, res) => {
+// function to set up database connection 
+const withDB = async (operations, res) => {
   try {
-    const articleName = req.params.name;
-
     // connect to local database, return promise
     const client = await MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true }, { useNewUrlParser: true })
-    // specify database to query 
+
+    // specify database to be used
     const db = client.db('basic-blog');
 
-    // query db, 
-    const articleInfo = await db.collection('articles').findOne({ name: articleName })
-    // response from the db
-    res.status(200).json(articleInfo);
+    // call operations function with db variable
+    await operations(db);
 
-    // close db connection
-    client.close();
   } catch (error) {
-    res.status(500).json({ message: 'Error connecting to db', error });
+    res.status(500).json({ message: 'Error connecting to db' })
   }
-})
+}
 
-// define endpoints for app
-// UPVOTES
-app.post('/api/articles/:name/upvote', async (req, res) => {
-  try {
+// ********** define endpoints for app **********
+// GET ARTICLE INFO
+app.get('/api/articles/:name', async (req, res) => {
+  withDB(async (db) => {
     // extract article name from url parameter
     const articleName = req.params.name;
 
-    // connect to local database, return promise
-    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true })
-    // specify database to query 
-    const db = client.db('basic-blog');
+    // findone query to find matching article
+    const articleInfo = await db.collection('articles').findOne({ name: articleName })
+
+    // response from the db
+    res.status(200).json(articleInfo);
+  }, res);
+})
+
+// UPVOTES
+app.post('/api/articles/:name/upvote', async (req, res) => {
+  withDB(async (db) => {
+    // extract article name from url parameter
+    const articleName = req.params.name;
 
     // findone query to find matching article
     const articleInfo = await db.collection('articles').findOne({ name: articleName });
@@ -56,14 +60,8 @@ app.post('/api/articles/:name/upvote', async (req, res) => {
 
     // send updated article info as a response to client for up-to-date info
     res.status(200).json(updatedArticleInfo);
-
-    // close db connection
-    client.close();
-  } catch (error) {
-    res.status(500).json({ message: 'Error connecting to db', error });
-  }
-
-});
+  }, res);
+})
 
 app.post('/api/articles/:name/add-comment', (req, res) => {
   const { username, text } = req.body;
