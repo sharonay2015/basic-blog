@@ -63,13 +63,27 @@ app.post('/api/articles/:name/upvote', async (req, res) => {
   }, res);
 })
 
+// COMMENTS
+
 app.post('/api/articles/:name/add-comment', (req, res) => {
   const { username, text } = req.body;
   const articleName = req.params.name;
 
-  articlesInfo[articleName].comments.push({ username, text });
-  res.status(200).send(articlesInfo[articleName]);
-});
+  withDB(async (db) => {
+    // findone query to find matching article
+    const articleInfo = await db.collection('articles').findOne({ name: articleName });
+    await db.collection('articles').updateOne({ name: articleName }, {
+      '$set': {
+        // get existing comments and add new comment
+        comments: articleInfo.comments.concat({ username, text }),
+      },
+    });
+    // get the updated version of article info
+    const updatedArticleInfo = await db.collection('articles').findOne({ name: articleName });
 
+    // send updated article info as a response
+    res.status(200).json(updatedArticleInfo);
+  }, res);
+})
 // start server
 app.listen(8000, () => console.log('Listening on port 8000'));
