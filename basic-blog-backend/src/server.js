@@ -64,7 +64,6 @@ app.post('/api/articles/:name/upvote', async (req, res) => {
 })
 
 // COMMENTS
-
 app.post('/api/articles/:name/add-comment', (req, res) => {
   const { username, text } = req.body;
   const articleName = req.params.name;
