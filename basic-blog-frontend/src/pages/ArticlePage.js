@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ArticleList from '../components/ArticleList';
+import CommentList from '../components/CommentList';
 import NotFoundPage from './NotFoundPage';
 import articleContent from './article-content';
 
@@ -8,14 +9,22 @@ const ArticlePage = ({ match }) => {
   // find article from articles array that has the name that matches the name in the url
   const article = articleContent.find(article => article.name === name);
 
-  // hook to keep track of state
+  // hook to keep track of state, sends request to
   const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
-  // test useEffect
-  useEffect(() => {
-    setArticleInfo({ upvotes: 3 })
-  })
 
-  // hook to load article info
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(`/api/articles/${name}`);
+      // get result body
+      const body = await result.json();
+      console.log(body);
+      setArticleInfo(body);
+    }
+    fetchData();
+    // setArticleInfo({ upvotes: Math.ceil(Math.random() * 10) })
+  }, [name]);
+
+  // hook to load article info, makes request to backend
 
   if (!article) return <NotFoundPage />
 
@@ -28,6 +37,7 @@ const ArticlePage = ({ match }) => {
       {article.content.map((paragraph, key) => (
         <p key={key}>{paragraph}</p>
       ))}
+      <CommentList comments={articleInfo.comments} />
       <h3>Other Articles:</h3>
       {/* display related articles list */}
       <ArticleList articles={otherArticles} />
