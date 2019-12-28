@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ArticleList from '../components/ArticleList';
 import CommentList from '../components/CommentList';
 import Upvotes from '../components/Upvotes';
+import AddCommentForm from '../components/AddCommentForm';
 import NotFoundPage from './NotFoundPage';
 import articleContent from './article-content';
 
@@ -10,7 +11,7 @@ const ArticlePage = ({ match }) => {
   // find article from articles array that has the name that matches the name in the url
   const article = articleContent.find(article => article.name === name);
 
-  // hook to keep track of state, sends request to
+  // hook to keep track of state, sends request to serer
   const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const ArticlePage = ({ match }) => {
         <p key={key}>{paragraph}</p>
       ))}
       <CommentList comments={articleInfo.comments} />
+      <AddCommentForm articleName={name} setArticleInfo={setArticleInfo} />
       <h3>Other Articles:</h3>
       {/* display related articles list */}
       <ArticleList articles={otherArticles} />

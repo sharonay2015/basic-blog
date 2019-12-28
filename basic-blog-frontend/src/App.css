@@ -10,6 +10,16 @@ body {
   font-size: 18px;
 }
 
+button {
+  padding: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  background-color: var(--main-color);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 h1 {
   font-family: 'Maven Pro', sans-serif;
   color: var(--main-color);
@@ -115,10 +125,9 @@ nav a:hover {
   width: 90vw;  
 }
 
-
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -131,7 +140,7 @@ nav a:hover {
   }
 }
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -140,7 +149,7 @@ nav a:hover {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 .App-link {
   color: #61dafb;
