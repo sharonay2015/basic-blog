@@ -1,11 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
+import path from 'path';
 
 // create backend app
 const app = express();
 
-// parse json object, adds body property to request parameter t
+// tell server where to serve static files from
+app.use(express.static(path.join(__dirname, '/build')));
+// parse json object, adds body property to request parameter 
 app.use(bodyParser.json());
 
 // function to set up database connection 
@@ -83,6 +86,11 @@ app.post('/api/articles/:name/add-comment', (req, res) => {
     // send updated article info as a response
     res.status(200).json(updatedArticleInfo);
   }, res);
+})
+
+// tells app all request should be passed on to app, unless caught by another api route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'));
 })
 // start server
 app.listen(8000, () => console.log('Listening on port 8000'));
